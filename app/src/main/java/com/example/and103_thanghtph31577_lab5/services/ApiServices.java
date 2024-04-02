@@ -72,6 +72,18 @@ public interface ApiServices {
     Call<Response<Page<ArrayList<Fruit>>>> getPageFruit(@Header("Authorization") String token, @QueryMap Map<String, String> stringMap);
 
 
+    @Multipart
+    @PUT("update-fruit-by-id/{id}")
+    Call<Response<Fruit>> updateFruitWithFileImage(@PartMap Map<String, RequestBody> requestBodyMap,
+                                                   @Path("id") String id,
+                                                   @Part ArrayList<MultipartBody.Part> ds_hinh
+    );
+
+    @DELETE("destroy-fruit-by-id/{id}")
+    Call<Response<Fruit>> deleteFruits(@Path("id") String id);
+
+
+
 
 }
 

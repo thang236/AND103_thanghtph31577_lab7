@@ -21,6 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.and103_thanghtph31577_lab5.R;
 import com.example.and103_thanghtph31577_lab5.databinding.ActivityAddFruitBinding;
 import com.example.and103_thanghtph31577_lab5.model.Distributor;
@@ -171,8 +172,8 @@ binding.avatar.setOnClickListener(new View.OnClickListener() {
                                 .thumbnail(Glide.with(AddFruitActivity.this).load(R.drawable.baseline_broken_image_24))
                                 .centerCrop()
                                 .circleCrop()
-//                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
                                 .into(binding.avatar);
                     }
                 }

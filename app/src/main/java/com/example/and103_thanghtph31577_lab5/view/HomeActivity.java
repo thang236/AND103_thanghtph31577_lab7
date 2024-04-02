@@ -1,10 +1,12 @@
 package com.example.and103_thanghtph31577_lab5.view;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,9 +20,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.widget.NestedScrollView;
 
+import com.example.and103_thanghtph31577_lab5.MainActivity;
 import com.example.and103_thanghtph31577_lab5.R;
 import com.example.and103_thanghtph31577_lab5.adapter.FruitAdapter;
 import com.example.and103_thanghtph31577_lab5.databinding.ActivityHomeBinding;
+import com.example.and103_thanghtph31577_lab5.databinding.DialogUpdateFruitBinding;
+import com.example.and103_thanghtph31577_lab5.model.Distributor;
 import com.example.and103_thanghtph31577_lab5.model.Fruit;
 import com.example.and103_thanghtph31577_lab5.model.Page;
 import com.example.and103_thanghtph31577_lab5.model.Response;
@@ -203,21 +208,60 @@ public class HomeActivity extends AppCompatActivity implements FruitAdapter.Frui
     }
 
 
+
+
+        Callback<Response<Fruit>> responseFruitAPI = new Callback<Response<Fruit>>() {
+            @Override
+            public void onResponse(Call<Response<Fruit>> call, retrofit2.Response<Response<Fruit>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus() == 200) {
+                        page = 1;
+                        ds.clear();
+                        FilterFruit();
+
+                        Toast.makeText(HomeActivity.this, response.body().getMessenger(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<Fruit>> call, Throwable t) {
+                Log.e("zzzzzzzz", "onFailure: "+t.getMessage() );
+            }
+        };
+
+
     @Override
     public void delete(Fruit fruit) {
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm delete");
+        builder.setMessage("Are you sure you want to delete?");
+        builder.setPositiveButton("yes", (dialog, which) -> {
+            httpRequest.callAPI()
+                    .deleteFruits(fruit.get_id())
+                    .enqueue(responseFruitAPI);
+        });
+        builder.setNegativeButton("no", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.show();
+
 
     }
 
     @Override
     public void edit(Fruit fruit) {
-
+       Intent intent =new Intent(HomeActivity.this, UpdateFruitActivity.class);
+        intent.putExtra("fruit", fruit);
+        startActivity(intent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Map<String,String> map = getMapFilter(page, "","0","-1");
-        httpRequest.callAPI().getPageFruit("Bearer " + token, map)
-                .enqueue(getListFruitResponse);
+        Log.d("loadddddd", "onResume: ");
+        page = 1;
+        ds.clear();
+        FilterFruit();
     }
 }

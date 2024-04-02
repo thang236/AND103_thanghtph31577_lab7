@@ -166,8 +166,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 .thumbnail(Glide.with(RegisterActivity.this).load(R.drawable.baseline_broken_image_24))
                                 .centerCrop()
                                 .circleCrop()
-//                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
                                 .into(binding.avatar);
                     }
                 }
