@@ -69,7 +69,7 @@ public interface ApiServices {
 
 
     @GET("get-page-fruit")
-    Call<Response<Page<ArrayList<Fruit>>>> getPageFruit(@Header("Authorization") String token, @QueryMap Map<String, String> stringMap);
+    Call<Response<Page<ArrayList<Fruit>>>> getPageFruit( @QueryMap Map<String, String> stringMap);
 
 
     @Multipart

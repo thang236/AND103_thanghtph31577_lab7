@@ -56,12 +56,13 @@ public class HomeActivity extends AppCompatActivity implements FruitAdapter.Frui
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
-        httpRequest = new HttpRequest();
         sharedPreferences = getSharedPreferences("INFO",MODE_PRIVATE);
 
         token = sharedPreferences.getString("token","");
+        httpRequest = new HttpRequest(token);
+
         Map<String,String> map = getMapFilter(page, "","0","-1");
-        httpRequest.callAPI().getPageFruit("Bearer " + token, map)
+        httpRequest.callAPI().getPageFruit( map)
                 .enqueue(getListFruitResponse);
 
         config();
@@ -192,7 +193,7 @@ public class HomeActivity extends AppCompatActivity implements FruitAdapter.Frui
         String _price = binding.edSearchMoney.getText().toString().equals("")? "0" : binding.edSearchMoney.getText().toString();
         String _sort = sort.equals("") ? "-1": sort;
         Map<String,String> map =getMapFilter(page, _name, _price, _sort);
-        httpRequest.callAPI().getPageFruit("Bearer " + token, map).enqueue(getListFruitResponse);
+        httpRequest.callAPI().getPageFruit( map).enqueue(getListFruitResponse);
 
     }
     private Map<String, String> getMapFilter(int _page,String _name, String _price, String _sort){
