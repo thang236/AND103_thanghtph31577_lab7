@@ -82,6 +82,9 @@ public interface ApiServices {
     @DELETE("destroy-fruit-by-id/{id}")
     Call<Response<Fruit>> deleteFruits(@Path("id") String id);
 
+    @GET("get-fruit-by-id/{id}")
+    Call<Response<Fruit>> getFruitById (@Path("id") String id);
+
 
 
 

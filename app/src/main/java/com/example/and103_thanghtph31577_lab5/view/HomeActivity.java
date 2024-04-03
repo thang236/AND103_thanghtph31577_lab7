@@ -258,6 +258,14 @@ public class HomeActivity extends AppCompatActivity implements FruitAdapter.Frui
     }
 
     @Override
+    public void showDetail(Fruit fruit) {
+        Intent intent =new Intent(HomeActivity.this, FruitDetailActivity.class);
+        intent.putExtra("fruit", fruit);
+        startActivity(intent);
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Log.d("loadddddd", "onResume: ");

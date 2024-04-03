@@ -31,6 +31,7 @@ public class FruitAdapter  extends RecyclerView.Adapter<FruitAdapter.ViewHolder>
     public interface FruitClick {
         void delete(Fruit fruit);
         void edit(Fruit fruit);
+        void showDetail(Fruit fruit);
     }
 
     @NonNull
@@ -64,6 +65,12 @@ public class FruitAdapter  extends RecyclerView.Adapter<FruitAdapter.ViewHolder>
             @Override
             public void onClick(View v) {
                 fruitClick.delete(fruit);
+            }
+        });
+        holder.binding.tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fruitClick.showDetail(fruit);
             }
         });
     }
