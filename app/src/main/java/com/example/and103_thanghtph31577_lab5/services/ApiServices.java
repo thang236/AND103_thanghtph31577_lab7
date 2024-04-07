@@ -1,10 +1,15 @@
 package com.example.and103_thanghtph31577_lab5.services;
 
 import com.example.and103_thanghtph31577_lab5.model.Distributor;
+import com.example.and103_thanghtph31577_lab5.model.District;
+import com.example.and103_thanghtph31577_lab5.model.DistrictRequest;
 import com.example.and103_thanghtph31577_lab5.model.Fruit;
 import com.example.and103_thanghtph31577_lab5.model.Page;
+import com.example.and103_thanghtph31577_lab5.model.Province;
 import com.example.and103_thanghtph31577_lab5.model.Response;
+import com.example.and103_thanghtph31577_lab5.model.ResponseGHN;
 import com.example.and103_thanghtph31577_lab5.model.User;
+import com.example.and103_thanghtph31577_lab5.model.Ward;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -84,6 +89,17 @@ public interface ApiServices {
 
     @GET("get-fruit-by-id/{id}")
     Call<Response<Fruit>> getFruitById (@Path("id") String id);
+
+
+    //API GHN
+    @GET("/shiip/public-api/master-data/province")
+    Call<ResponseGHN<ArrayList<Province>>> getListProvince();
+
+    @POST("/shiip/public-api/master-data/district")
+    Call<ResponseGHN<ArrayList<District>>> getListDistrict(@Body DistrictRequest districtRequest);
+
+    @GET("/shiip/public-api/master-data/ward")
+    Call<ResponseGHN<ArrayList<Ward>>> getListWard(@Query("district_id") int district_id);
 
 
 

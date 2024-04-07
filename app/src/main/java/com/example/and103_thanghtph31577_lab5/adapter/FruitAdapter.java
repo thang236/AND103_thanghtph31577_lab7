@@ -1,6 +1,8 @@
 package com.example.and103_thanghtph31577_lab5.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.example.and103_thanghtph31577_lab5.R;
 import com.example.and103_thanghtph31577_lab5.databinding.ItemFruitBinding;
 import com.example.and103_thanghtph31577_lab5.model.Distributor;
 import com.example.and103_thanghtph31577_lab5.model.Fruit;
+import com.example.and103_thanghtph31577_lab5.view.LocationActivity;
 
 import java.util.ArrayList;
 
@@ -71,6 +74,16 @@ public class FruitAdapter  extends RecyclerView.Adapter<FruitAdapter.ViewHolder>
             @Override
             public void onClick(View v) {
                 fruitClick.showDetail(fruit);
+            }
+        });
+        holder.binding.btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("item", list.get(holder.getAdapterPosition()));
+                Intent intent = new Intent(context, LocationActivity.class);
+                intent.putExtras(bundle);
+                (context).startActivity(intent);
             }
         });
     }

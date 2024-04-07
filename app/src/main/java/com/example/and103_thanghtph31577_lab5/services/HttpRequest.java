@@ -15,6 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpRequest {
     private ApiServices requestInterface;
+    private static final String SHOP_ID = "191530";
+    private static final String TOKEN_GHN = "d01c7b44-ec5d-11ee-8bfa-8a2dda8ec551";
 
     public HttpRequest() {
         requestInterface = new Retrofit.Builder()
@@ -39,6 +41,9 @@ public class HttpRequest {
                 .client(httpClient.build())
                 .build().create(ApiServices.class);
     }
+
+
+
 
     public ApiServices callAPI() {
         return requestInterface;
