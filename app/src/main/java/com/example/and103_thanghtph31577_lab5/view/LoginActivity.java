@@ -3,6 +3,7 @@ package com.example.and103_thanghtph31577_lab5.view;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,13 +39,18 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User();
                 String _username = binding.edUsername.getText().toString().trim();
                 String _password = binding.edPassword.getText().toString().trim();
-                user.setUsername(_username);
-                user.setPassword(_password);
-                httpRequest.callAPI().login(user).enqueue(responseUser);
+                if (_username.isEmpty() | _password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Vui lòng nhập tài khoản và mật kẩu", Toast.LENGTH_SHORT).show();
+                }else {
+                    User user = new User();
+                    user.setUsername(_username);
+                    user.setPassword(_password);
+                    httpRequest.callAPI().login(user).enqueue(responseUser);
 
+
+                }
             }
         });
     }
@@ -52,7 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     Callback<Response<User>> responseUser = new Callback<Response<User>>() {
         @Override
         public void onResponse(Call<Response<User>> call, retrofit2.Response<Response<User>> response) {
+            Log.d("zzzzzzz", "onResponse: "+ response.isSuccessful());
             if (response.isSuccessful()) {
+                Log.d("zzzzzzz", "onResponse: " + response.body().getStatus());
                 if (response.body().getStatus() ==200) {
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     SharedPreferences sharedPreferences = getSharedPreferences("INFO",MODE_PRIVATE);
@@ -62,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("id", response.body().getData().get_id());
                     editor.apply();
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                }else {
+                    Toast.makeText(LoginActivity.this, "Sai tài khoản khoặc mật khẩu", Toast.LENGTH_SHORT).show();
                 }
             }
         }

@@ -181,10 +181,12 @@ public class HomeActivity extends AppCompatActivity implements FruitAdapter.Frui
                 }
             },1000);
             return;
+        }else {ds.clear();
+            ds.addAll(_ds);
+            adapter = new FruitAdapter(this, ds,this );
+            binding.rcvFruit.setAdapter(adapter);
         }
-        ds.addAll(_ds);
-        adapter = new FruitAdapter(this, ds,this );
-        binding.rcvFruit.setAdapter(adapter);
+
     }
 
 
